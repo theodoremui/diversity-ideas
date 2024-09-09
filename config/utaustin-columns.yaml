@@ -1,0 +1,16 @@
+RETRIES: 6
+CHECKPOINT_FREQUENCY: 10
+
+OUTPUT_DIR: "data"
+SCHOOL: "utaustin"
+SUBJECT: "opinions"
+
+BASE_URL: "https://thedailytexan.com"
+LISTING_BASE_URL: "https://thedailytexan.com/category/opinion/columns/page/"
+ARTICLE_SELECTOR: "div > h2 > a[href^='https://thedailytexan.com']"
+TITLE_SELECTOR: "#sno-main-content > div > div > h1[class^='sno-story-headline']"
+CONTENT_SELECTOR: "#sno-story-body-content"
+DATE_SELECTOR: "#sno-main-content > div > div > div.sno-story-date > span"
+
+URL_DATE_PATTERN: "https://thedailytexan.com/(\\d+)/(\\d+)"
+DATE_FORMAT: "%B %d, %Y"

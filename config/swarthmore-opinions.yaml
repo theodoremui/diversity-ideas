@@ -1,0 +1,16 @@
+RETRIES: 6
+CHECKPOINT_FREQUENCY: 10
+
+OUTPUT_DIR: "data"
+SCHOOL: "swarthmore"
+SUBJECT: "opinions"
+
+BASE_URL: "https://swarthmorephoenix.com"
+LISTING_BASE_URL: "https://swarthmorephoenix.com/category/opinions/page/"
+ARTICLE_SELECTOR: "h2.post-item-title > a[href^='https://swarthmorephoenix.com/']"
+TITLE_SELECTOR: "article div.title-subtitle > h1[class^='post-title']"
+CONTENT_SELECTOR: "div[class^='content-main'] > div[class^='dropcap-content']"
+DATE_SELECTOR: "time[itemprop^='datePublished']"
+
+URL_DATE_PATTERN: "https://swarthmorephoenix.com/(\\d+)/(\\d+)"
+DATE_FORMAT: "%B %d, %Y"

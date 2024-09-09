@@ -1,0 +1,34 @@
+[tool.poetry]
+name = "diversity-colleges"
+version = "0.1.0"
+description = ""
+authors = ["Phil Mui <thephilmui@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">3.10,<3.12"
+
+beautifulsoup4 = "^4.12.3"
+llama-index = "^0.11.3"
+llama-index-core = "^0.11.3"
+llama-index-embeddings-openai = "^0.2.3"
+llama-index-llms-openai = "^0.2.0"
+llama-index-vector-stores-qdrant = "^0.3.0"
+python-dotenv = "^1.0.1"
+qdrant-client = "^1.11.1"
+spider-client = "^0.0.69"
+boto3 = "^1.35.10"
+pyarrow = "^17.0.0"
+fake-useragent = "^1.5.1"
+selenium = "^4.24.0"
+webdriver-manager = "^4.0.2"
+scrapingant-client = "^2.1.0"
+
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.29.5"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

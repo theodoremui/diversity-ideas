@@ -1,0 +1,42 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "crawl2parquet",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/src/crawl2parquet.py",
+      "console": "integratedTerminal",
+      "args": [
+        "config/harvard-columns.yaml",
+        "3",
+        "3",
+      ],
+      "purpose": [
+        "debug-in-terminal"
+      ],
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "Python: Current File",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${file}",
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "args": [
+        "1",
+        "10",
+        "1"
+      ],
+      "purpose": [
+        "debug-in-terminal"
+      ]
+    }
+  ]
+}
+// for running 'topicmodeling-general.py'
+// "args": ["berkeley", "opinion", "2011", "2012"],

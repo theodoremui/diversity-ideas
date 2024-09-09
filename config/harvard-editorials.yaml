@@ -1,0 +1,17 @@
+RETRIES: 6
+CHECKPOINT_FREQUENCY: 10
+
+OUTPUT_DIR: "data"
+SCHOOL: "harvard"
+SUBJECT: "editorials"
+
+BASE_URL: "https://www.thecrimson.com"
+LISTING_BASE_URL: "https://www.thecrimson.com/tag/editorials/page/"
+ARTICLE_SELECTOR: " div > div > div.preview-content > h1 > a[href^='/article']"
+
+TITLE_SELECTOR: "#root > div.css-nmmrhs > div.css-bgn7sn > h1"
+CONTENT_SELECTOR: "#root > div > div.css-85imjw"
+DATE_SELECTOR: "#root div > span > time"
+
+URL_DATE_PATTERN: "https://www.thecrimson.com/article/(\\d+)/(\\d+)"
+DATE_FORMAT: "%B %d, %Y"
