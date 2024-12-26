@@ -122,8 +122,13 @@ def getArticleText(url, numRetries, useProxy=True):
                             # Try full month name format first
                             dateObj = datetime.strptime(date_string, "%B %d, %Y")
                         except ValueError:
-                            # If that fails, try abbreviated month format
-                            dateObj = datetime.strptime(date_string, "%b. %d, %Y")
+                            try:
+                                dateObj = datetime.strptime(date_string, "%b. %d, %Y")
+                            except ValueError:
+                                try:
+                                    dateObj = datetime.strptime(date_string, "%b %d, %Y")
+                                except ValueError:
+                                    dateObj = None
                     else:
                         dateObj = None
                     
