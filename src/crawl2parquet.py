@@ -102,38 +102,54 @@ def getArticleText(url, numRetries, useProxy=True):
     attempts = 0
     content = ""
     dateObj = None
-    while attempts <= numRetries and len(content) < 5: 
-        # only use proxy if we have tried and failed in attempt 0
-        if attempts > 3: useProxy = True
-        html = ourrequests.requestHtml(url, attempts, useProxy)
-        if html is not None and len(html) > 10:
-            soup = BeautifulSoup(html, 'html.parser')
-            titleObj = soup.select_one(TITLE_SELECTOR)
-            contentObj  = soup.select_one(CONTENT_SELECTOR)
-            dateObj = soup.select_one(DATE_SELECTOR)
-            if titleObj is not None: content = titleObj.text.strip() + "\n"
-            if contentObj is not None:  content += contentObj.text.strip()
-            if dateObj is not None: 
-                date_string = re.search(TEXT_DATE_PATTERN, dateObj.text).group(1)
-                dateObj = datetime.strptime(date_string, DATE_FORMAT)
-                
-            # for date, try to the URL first
-            if dateObj is None: 
-                date_groups = re.search(URL_DATE_PATTERN, url)
-                if date_groups and len(date_groups.groups()) >= 2:
-                    dateObj = datetime(int(date_groups.group(1)), 
-                                    int(date_groups.group(2)), 1)
+    if url is not None and len(url) > 0:
+        while attempts <= numRetries and len(content) < 5: 
+            # only use proxy if we have tried and failed in attempt 0
+            if attempts > 3: useProxy = True
+            html = ourrequests.requestHtml(url, attempts, useProxy)
+            if html is not None and len(html) > 10:
+                soup = BeautifulSoup(html, 'html.parser')
+                titleObj = soup.select_one(TITLE_SELECTOR)
+                contentObj  = soup.select_one(CONTENT_SELECTOR)
+                dateObj = soup.select_one(DATE_SELECTOR)
+                if titleObj is not None: content = titleObj.text.strip() + "\n"
+                if contentObj is not None:  content += contentObj.text.strip()
+                if dateObj is not None: 
+                    match = re.search(TEXT_DATE_PATTERN, dateObj.text)
+                    if match:
+                        date_string = match.group(1)
+                        try:
+                            # Try full month name format first
+                            dateObj = datetime.strptime(date_string, "%B %d, %Y")
+                        except ValueError:
+                            # If that fails, try abbreviated month format
+                            dateObj = datetime.strptime(date_string, "%b. %d, %Y")
+                    else:
+                        dateObj = None
+                    
+                # for date, try to the URL first
+                if dateObj is None:
+                    try:
+                        date_groups = re.search(URL_DATE_PATTERN, url)
+                        if date_groups and len(date_groups.groups()) >= 2:
+                            try:
+                                dateObj = datetime(int(date_groups.group(1)), 
+                                                 int(date_groups.group(2)), 1)
+                            except (ValueError, TypeError) as e:
+                                print(f"\tInvalid date values in URL {url}: {e}")
+                    except (AttributeError, TypeError) as e:
+                        print(f"\tFailed to extract date from URL {url}: {e}")
 
-        if len(html) > 10 and (content is None or dateObj is None):
-            title, content, dateObj = parse_html_with_LLM(html)
-            content = title + "\n" + content
+            if len(html) > 10 and (content is None or dateObj is None):
+                title, content, dateObj = parse_html_with_LLM(html)
+                content = title + "\n" + content
 
-        attempts += 1
+            attempts += 1
 
-        # give the website a small break before next ping
-        time.sleep(random.randint(0, 100 * attempts) / 1000.0)
+            # give the website a small break before next ping
+            time.sleep(random.randint(0, 100 * attempts) / 1000.0)
+        print(f"\t\t\t{len(content)} ... " + content[-30:].replace('\n','') + ": " + str(dateObj))
 
-    print(f"\t\t\t{len(content)} ... " + content[-30:].replace('\n',''))
     return content, dateObj
 
 
@@ -163,19 +179,23 @@ def getFullUrl(url):
 
 def process_article(article: Tag) -> tuple[dict, int]:
     url = article.get('href')
-    url = getFullUrl(url)
+
+    if url is not None and len(url) > 0:
+        url = getFullUrl(url)
     
-    if article.text is not None and len(article.text) > 0 and \
-        url is not None and len(url) > 10:
-        body, dateObj = getArticleText(url, RETRIES)
-        return { 
-            'title' : article.text.strip("\"").strip(),
-            'url'   : url,
-            'body'  : body,
-            'year'  : dateObj.year,
-            'month' : dateObj.month,
-            'day'   : dateObj.day
-        }, body.count(' ')
+        if url is not None and len(url) > 10 and \
+            article.text is not None and len(article.text) > 0 and \
+            article.text.strip() != "":
+                
+            body, dateObj = getArticleText(url, RETRIES)
+            return { 
+                'title' : article.text.strip("\"").strip(),
+                'url'   : url,
+                'body'  : body,
+                'year'  : dateObj.year,
+                'month' : dateObj.month,
+                'day'   : dateObj.day
+            }, body.count(' ')
     return None, 0
 
 def getArticles(baseURL, pageList, showProgress=False, useProxy=False):
@@ -199,7 +219,7 @@ def getArticles(baseURL, pageList, showProgress=False, useProxy=False):
                             articles.append(result)
                             wordCount += word_count
                     except Exception as e:
-                        print(f"\acannot processing article: {url[:-18]} - {e}")
+                        print(f"\acannot processing article: {e}")
         if pageNumber % CHECKPOINT_FREQUENCY == 0: 
             ouraws.saveNewArticles(articles, checkpoint_name=CHECKPOINT_FILENAME)
         if showProgress: 

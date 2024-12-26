@@ -1,0 +1,17 @@
+RETRIES: 6
+CHECKPOINT_FREQUENCY: 10
+
+OUTPUT_DIR: "data"
+SCHOOL: "stanford"
+SUBJECT: "opinions"
+
+BASE_URL: "https://stanforddaily.com"
+LISTING_BASE_URL: "https://stanforddaily.com/category/opinions/page/"
+ARTICLE_SELECTOR: "div > h3 > a[href^='https://stanforddaily.com/']"
+
+TITLE_SELECTOR: "article div > h1.elementor-heading-title"
+CONTENT_SELECTOR: "article div > div.e-con-inner"
+DATE_SELECTOR: "#date > div > span"
+
+URL_DATE_PATTERN: "https://stanforddaily.com/(\\d+)/(\\d+)"
+DATE_FORMAT: "%b. %d, %Y"
