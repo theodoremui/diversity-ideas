@@ -1,34 +1,26 @@
-[tool.poetry]
-name = "diversity-colleges"
+[project]
+name = "diversity-ideas"
 version = "0.1.0"
-description = ""
-authors = ["Phil Mui <thephilmui@gmail.com>"]
-license = "MIT"
+description = "Studying diversity of ideas across college campuses"
 readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "boto3>=1.35.87",
+    "bs4>=0.0.2",
+    "fake-useragent>=2.0.3",
+    "openai>=1.58.1",
+    "pandas>=2.2.3",
+    "pyarrow>=18.1.0",
+    "python-dotenv>=1.0.1",
+    "qdrant-client>=1.12.1",
+    "scrapingant-client>=2.1.0",
+    "selenium>=4.27.1",
+    "spider-client>=0.1.25",
+    "webdriver-manager>=4.0.2",
+    "pyyaml>=6.0.2",
+]
 
-[tool.poetry.dependencies]
-python = ">3.10,<3.12"
-
-beautifulsoup4 = "^4.12.3"
-llama-index = "^0.11.3"
-llama-index-core = "^0.11.3"
-llama-index-embeddings-openai = "^0.2.3"
-llama-index-llms-openai = "^0.2.0"
-llama-index-vector-stores-qdrant = "^0.3.0"
-python-dotenv = "^1.0.1"
-qdrant-client = "^1.11.1"
-spider-client = "^0.0.69"
-boto3 = "^1.35.10"
-pyarrow = "^17.0.0"
-fake-useragent = "^1.5.1"
-selenium = "^4.24.0"
-webdriver-manager = "^4.0.2"
-scrapingant-client = "^2.1.0"
-
-
-[tool.poetry.group.dev.dependencies]
-ipykernel = "^6.29.5"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[dependency-groups]
+dev = [
+    "pytest>=8.3.4",
+]

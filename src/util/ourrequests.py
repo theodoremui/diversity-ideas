@@ -157,7 +157,7 @@ def requestWithRetry(url, numRetries=HTTP_RETRIES):
     except Exception as e:
         print(f"\trequest failed for {url}: {e}")
     s.close()
-    print(f"\treq: {len(html)}: {url}: ...{html[-7:]}")
+    print(f"\treq: {len(html)}: {url[:16]}...{url[-16:]}::: ...{html[-7:]}")
 
     return html
 

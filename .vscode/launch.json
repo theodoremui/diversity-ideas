@@ -5,15 +5,15 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "crawl2parquet",
+      "name": "swarthmore-opinions",
       "type": "debugpy",
       "request": "launch",
       "program": "${workspaceFolder}/src/crawl2parquet.py",
       "console": "integratedTerminal",
       "args": [
-        "config/harvard-columns.yaml",
-        "3",
-        "3",
+        "config/swarthmore-opinions.yaml",
+        "1",
+        "6",
       ],
       "purpose": [
         "debug-in-terminal"

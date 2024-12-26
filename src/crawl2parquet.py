@@ -23,12 +23,12 @@ import pandas as pd
 from openai import OpenAI
 import re
 import random
-import sys
 import time
 import yaml
 
 from util import ouraws
 from util import ourrequests
+
 RETRIES = 6
 CHECKPOINT_FREQUENCY = 10 # every 10 pages
 
