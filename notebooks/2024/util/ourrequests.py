@@ -24,7 +24,7 @@ from tenacity import retry, stop_after_attempt, wait_exponential
 
 BAD_HTTP_CODES = (400,401,403,404,406,408,409,410,429,500,502,503,504)
 USER_AGENT = UserAgent()
-HTTP_RETRIES = 3
+HTTP_RETRIES = 6
 
 from scrapingant_client import ScrapingAntClient
 SCRAPINGANT_API_TOKEN = os.environ.get("SCRAPINGANT_API_TOKEN")
@@ -62,13 +62,13 @@ HEADERS  = [
 def requestWithProxy(url, numRetries=5):
     html = ""
     
-    # # ScrapingDog
-    # SCRAPINGDOG_PAYLOAD['url'] = url
-    # SCRAPINGDOG_PAYLOAD['session_number'] = random.randint(0,9999)
-    # result = requests.get(SCRAPINGDOG_PROXY, params=SCRAPINGDOG_PAYLOAD)
-    # if result.status_code == 200: 
-    #     html = result.text.strip()
-    #     print(f"\tdog: {len(html)}: {url}")
+    # ScrapingDog
+    SCRAPINGDOG_PAYLOAD['url'] = url
+    SCRAPINGDOG_PAYLOAD['session_number'] = random.randint(0,9999)
+    result = requests.get(SCRAPINGDOG_PROXY, params=SCRAPINGDOG_PAYLOAD)
+    if result.status_code == 200: 
+        html = result.text.strip()
+        print(f"\tdog: {len(html)}: {url}")
         
     # ScraperAPI
     if len(html) < 10:
@@ -143,7 +143,7 @@ def requestWithRetry(url, numRetries=HTTP_RETRIES):
     retries = Retry(total=2*numRetries,
                     connect=numRetries,
                     read=numRetries,
-                    backoff_factor=0.5,
+                    backoff_factor=0.1,
                     status_forcelist=BAD_HTTP_CODES)
     adapter = HTTPAdapter(max_retries=retries)
     s.mount('http://', adapter)
@@ -156,9 +156,8 @@ def requestWithRetry(url, numRetries=HTTP_RETRIES):
             html = response.text.strip()
     except Exception as e:
         print(f"\trequest failed for {url}: {e}")
-    finally:
-        s.close()
-        print(f"\treq: {len(html)}: {url[:16]}...{url[-16:]}::: ...{html[-7:]}")
+    s.close()
+    print(f"\treq: {len(html)}: {url[:16]}...{url[-16:]}::: ...{html[-7:]}")
 
     return html
 
@@ -187,11 +186,11 @@ def spiderHtml(url: str, attempt: int, useProxy: bool = True, return_format: str
             'limit': 1,
             'metadata': True,
             'proxy_enabled': useProxy,
-            # 'request': 'smart',
+            'request': 'smart',
             'respect_robots': True,
             'return_format': return_format,
             "stealth": True,
-            'store_data': False,
+            'store_data': True,
         }
         crawl_result = spider.crawl_url(url, params=crawler_params)
         html = crawl_result[0]['content'].strip()
@@ -216,11 +215,11 @@ def requestHtml(url: str, attempt: int, useProxy: bool = True, return_format: st
         except Exception as e:
             print(f"\tproxy request: {e}")
         
-    # if len(html) < 10:  # spider is slow -- use judiciously
-    #     try:
-    #         html = spiderHtml(url, attempt, useProxy, return_format)
-    #     except Exception as e:
-    #         print(f"\tspider request: {e}")
+    if len(html) < 10:  # spider is slow -- use judiciously
+        try:
+            html = spiderHtml(url, attempt, useProxy, return_format)
+        except Exception as e:
+            print(f"\tspider request: {e}")
             
     # selenium chrome is slow -- use judiciously
     # if len(html) < 10:
@@ -230,3 +229,6 @@ def requestHtml(url: str, attempt: int, useProxy: bool = True, return_format: st
     #         print(f"\tchrome request: {e}")
 
     return html
+
+
+

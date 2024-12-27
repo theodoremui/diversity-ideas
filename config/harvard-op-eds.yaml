@@ -12,6 +12,6 @@ ARTICLE_SELECTOR: " div > div > div.preview-content > h1 > a[href^='/article']"
 TITLE_SELECTOR: "#root > div.css-nmmrhs > div.css-bgn7sn > h1"
 CONTENT_SELECTOR: "#root > div > div.css-85imjw"
 DATE_SELECTOR: "#root div > span > time"
+DATE_FORMATS: ["%B %d, %Y", "%b. %d, %Y", "%b %d, %Y"]
 
 URL_DATE_PATTERN: "https://www.thecrimson.com/article/(\\d+)/(\\d+)"
-DATE_FORMAT: "%B %d, %Y"
