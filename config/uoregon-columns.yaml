@@ -12,6 +12,6 @@ ARTICLE_SELECTOR: "#content div > div > h2> a[href^='https://dailyemerald.com/']
 TITLE_SELECTOR: "div > div > h1.sno-story-headline"
 CONTENT_SELECTOR: "#sno-story-body-content"
 DATE_SELECTOR: "div.sno-story-date > span"
+DATE_FORMATS: ["%B %d, %Y", "%b. %d, %Y", "%b %d, %Y"]
 
 URL_DATE_PATTERN: "https://dailyemerald.com/"
-DATE_FORMAT: "%B %d, %Y"

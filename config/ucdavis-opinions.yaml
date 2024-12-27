@@ -1,0 +1,18 @@
+RETRIES: 6
+CHECKPOINT_FREQUENCY: 1
+
+OUTPUT_DIR: "data"
+SCHOOL: "ucdavis"
+SUBJECT: "opinions"
+
+BASE_URL: "https://theaggie.org"
+LISTING_BASE_URL: "https://theaggie.org/category/opinion/page/"
+ARTICLE_SELECTOR: "div > h3.entry-title > a[href^='https://theaggie.org/']"
+
+TITLE_SELECTOR: "article div > h1.tdb-title-text"
+CONTENT_SELECTOR: "article div > div.td_block_wrap.tdb_single_content"
+
+DATE_SELECTOR: ""
+DATE_FORMATS: ["%B %d, %Y", "%b. %d, %Y", "%b %d, %Y"]
+
+URL_DATE_PATTERN: "https://theaggie.org/(\\d+)/(\\d+)"
