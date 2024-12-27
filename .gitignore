@@ -1,5 +1,3 @@
-*.parquet
-
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -134,3 +132,5 @@ models/
 
 .DS_Store
 .DS_Store/
+
+data/archive/

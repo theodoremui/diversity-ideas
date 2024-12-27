@@ -14,6 +14,7 @@
 import argparse
 import asyncio
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from typing import List, Dict, Tuple, Optional, Any
 
 from bs4 import BeautifulSoup
 from bs4.element import Tag
@@ -29,26 +30,27 @@ import yaml
 from util import ouraws
 from util import ourrequests
 
-RETRIES = 6
-CHECKPOINT_FREQUENCY = 10 # every 10 pages
+RETRIES: int = 6
+CHECKPOINT_FREQUENCY: int = 10 # every 10 pages
 
 OUTPUT_DIR="data"
 SCHOOL="college"
 SUBJECT="opinions"
 
-BASE_URL = "<base>"
-LISTING_BASE_URL = f"<url>"
-ARTICLE_SELECTOR = f"<selector>"
+BASE_URL: str = "<base>"
+LISTING_BASE_URL: str = f"<url>"
+ARTICLE_SELECTOR: str = f"<selector>"
 TITLE_SELECTOR = f"<title_selector>"
 CONTENT_SELECTOR = f"<content_selector>"
 DATE_SELECTOR = f"<date_selector>"
 URL_DATE_PATTERN = "https://college/article/(\d+)/(\d+)"
-DATE_FORMAT="%B %d, %Y"
+DATE_FORMATS = ["%b. %d, %Y", "%b %d, %Y", "%B %d, %Y"]
 
 openai_client = OpenAI()
 
-def parse_html_with_LLM(html_text: str) -> tuple[str, str, datetime]:
+def parse_html_with_LLM(html_text: str) -> Tuple[str, str, Optional[datetime]]:
     
+    PREFERRED_DATE_FORMAT = "%B %d, %Y"
     # Extract the title, main content, and date using LLM
     response = openai_client.chat.completions.create(
         model="gpt-4o",
@@ -65,7 +67,7 @@ def parse_html_with_LLM(html_text: str) -> tuple[str, str, datetime]:
                     f"{html_text}\n"
                     f"======================\n"
                     f"Only return in JSON format with keys 'title', 'content', and 'date' and nothing else.\n"
-                    f"Date should be in the format of {DATE_FORMAT}\n"
+                    f"Date should be in the format of {PREFERRED_DATE_FORMAT}\n"
                     f"Output: "
                 )
             }
@@ -86,7 +88,7 @@ def parse_html_with_LLM(html_text: str) -> tuple[str, str, datetime]:
     date_obj = None
     if date_str:
         try:
-            date_obj = datetime.strptime(date_str, DATE_FORMAT)
+            date_obj = datetime.strptime(date_str, PREFERRED_DATE_FORMAT)
         except ValueError:
             date_obj = datetime.strptime(date_str, "%Y-%m-%d")
     return result_dict.get('title', ''), result_dict.get('content', ''), date_obj
@@ -98,7 +100,7 @@ def parse_html_with_LLM(html_text: str) -> tuple[str, str, datetime]:
 # extracts:  May 24, 2024
 TEXT_DATE_PATTERN = r"([A-Za-z]+ \d{1,2}, \d{4})"
 
-def getArticleText(url, numRetries, useProxy=True):
+def getArticleText(url: str, numRetries: int, useProxy: bool = True) -> Tuple[str, Optional[datetime]]:
     attempts = 0
     content = ""
     dateObj = None
@@ -111,24 +113,24 @@ def getArticleText(url, numRetries, useProxy=True):
                 soup = BeautifulSoup(html, 'html.parser')
                 titleObj = soup.select_one(TITLE_SELECTOR)
                 contentObj  = soup.select_one(CONTENT_SELECTOR)
-                dateObj = soup.select_one(DATE_SELECTOR)
                 if titleObj is not None: content = titleObj.text.strip() + "\n"
                 if contentObj is not None:  content += contentObj.text.strip()
-                if dateObj is not None: 
-                    match = re.search(TEXT_DATE_PATTERN, dateObj.text)
-                    if match:
-                        date_string = match.group(1)
-                        try:
-                            # Try full month name format first
-                            dateObj = datetime.strptime(date_string, "%B %d, %Y")
-                        except ValueError:
-                            # If that fails, try abbreviated month format
-                            dateObj = datetime.strptime(date_string, "%b. %d, %Y")
-                    else:
-                        dateObj = None
-                    
+
+                if DATE_SELECTOR is not None and len(DATE_SELECTOR.strip()) > 0:
+                    dateObj = soup.select_one(DATE_SELECTOR)
+                    if dateObj is not None:
+                        match = re.search(TEXT_DATE_PATTERN, dateObj.text)
+                        if match:
+                            date_string = match.group(1)
+                            for date_format in DATE_FORMATS:
+                                try:
+                                    dateObj = datetime.strptime(date_string, date_format)
+                                    break # done
+                                except ValueError:
+                                    pass
+                                                        
                 # for date, try to the URL first
-                if dateObj is None:
+                if dateObj is None or len(DATE_SELECTOR.strip()) ==0:
                     try:
                         date_groups = re.search(URL_DATE_PATTERN, url)
                         if date_groups and len(date_groups.groups()) >= 2:
@@ -140,25 +142,25 @@ def getArticleText(url, numRetries, useProxy=True):
                     except (AttributeError, TypeError) as e:
                         print(f"\tFailed to extract date from URL {url}: {e}")
 
+            # if we still don't have content, use LLM to parse html
             if len(html) > 10 and (content is None or dateObj is None):
                 title, content, dateObj = parse_html_with_LLM(html)
-                content = title + "\n" + content
+                content = title + "\n\n" + content
 
             attempts += 1
 
-            # give the website a small break before next ping
-            time.sleep(random.randint(0, 100 * attempts) / 1000.0)
-        print(f"\t\t\t{len(content)} ... " + content[-30:].replace('\n','') + ": " + str(dateObj))
+        print(f"\t\t\t{len(content)} ... " + content[-30:].replace('\n','') + "\t:::" + 
+              (f"{dateObj.year}-{dateObj.month:02d}" if dateObj else ""))
 
     return content, dateObj
 
 
-def getArticleList(listUrl, numRetries, showProgress=False, useProxy=False):
+def getArticleList(listUrl: str, numRetries: int, showProgress: bool = False, useProxy: bool = False) -> List[Tag]:
     ''' Get articles linked off listing pages
         Retry logic: bit.ly/requests-retry
     '''
-    articleList = []
-    attempts = 0
+    articleList: List[Tag] = []
+    attempts: int = 0
     while attempts <= numRetries and len(articleList) == 0:
         # only use proxy if we have tried and failed in attempt 0
         if attempts > 3: useProxy = True
@@ -172,12 +174,12 @@ def getArticleList(listUrl, numRetries, showProgress=False, useProxy=False):
 
     return articleList
 
-def getFullUrl(url):
+def getFullUrl(url: str) -> str:
     if not url.startswith("http"):
         url = BASE_URL + url
     return url
 
-def process_article(article: Tag) -> tuple[dict, int]:
+def process_article(article: Tag) -> Tuple[Optional[Dict[str, Any]], int]:
     url = article.get('href')
 
     if url is not None and len(url) > 0:
@@ -198,10 +200,10 @@ def process_article(article: Tag) -> tuple[dict, int]:
             }, body.count(' ')
     return None, 0
 
-def getArticles(baseURL, pageList, showProgress=False, useProxy=False):
-    CHECKPOINT_FILENAME = f"{OUTPUT_DIR}/{SCHOOL}-{SUBJECT}.parquet"
-    failedPages = []
-    articles = []
+def getArticles(baseURL: str, pageList: range, showProgress: bool = False, useProxy: bool = False) -> Tuple[pd.DataFrame, List[int]]:
+    CHECKPOINT_FILENAME: str = f"{OUTPUT_DIR}/{SCHOOL}-{SUBJECT}.parquet"
+    failedPages: List[int] = []
+    articles: List[Dict[str, Any]] = []
     dateObj = None
     for pageNumber in pageList:
         articleList = getArticleList(baseURL+str(pageNumber), 
@@ -216,8 +218,10 @@ def getArticles(baseURL, pageList, showProgress=False, useProxy=False):
                         result, word_count = future.result(timeout=30)
                         if result is not None and result['url'] is not None:
                             url = result['url']
-                            articles.append(result)
-                            wordCount += word_count
+                            # Only append if URL is not already in articles
+                            if not any(article['url'] == url for article in articles):
+                                articles.append(result)
+                                wordCount += word_count
                     except Exception as e:
                         print(f"\acannot processing article: {e}")
         if pageNumber % CHECKPOINT_FREQUENCY == 0: 
@@ -230,7 +234,7 @@ def getArticles(baseURL, pageList, showProgress=False, useProxy=False):
     df = ouraws.saveNewArticles(articles, checkpoint_name=CHECKPOINT_FILENAME)
     return df, failedPages
 
-def startProcessing(startPage, endPage, numRetries):
+def startProcessing(startPage: int, endPage: int, numRetries: int) -> None:
     df, failedPages = getArticles(LISTING_BASE_URL, range(startPage,endPage+1), 
                                   showProgress=True)
     while len(failedPages) > 0 and numRetries > 0:
@@ -261,7 +265,7 @@ def startProcessing(startPage, endPage, numRetries):
                     prefix=f"{OUTPUT_DIR}/{SCHOOL}-{SUBJECT}")
 
 
-def load_config(config_file):
+def load_config(config_file: str) -> Dict[str, Any]:
     with open(config_file, 'r') as f:
         config = yaml.safe_load(f)
     return config

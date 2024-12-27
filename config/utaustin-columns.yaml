@@ -11,6 +11,6 @@ ARTICLE_SELECTOR: "div > h2 > a[href^='https://thedailytexan.com']"
 TITLE_SELECTOR: "#sno-main-content > div > div > h1[class^='sno-story-headline']"
 CONTENT_SELECTOR: "#sno-story-body-content"
 DATE_SELECTOR: "#sno-main-content > div > div > div.sno-story-date > span"
+DATE_FORMATS: ["%B %d, %Y", "%b. %d, %Y", "%b %d, %Y"]
 
 URL_DATE_PATTERN: "https://thedailytexan.com/(\\d+)/(\\d+)"
-DATE_FORMAT: "%B %d, %Y"

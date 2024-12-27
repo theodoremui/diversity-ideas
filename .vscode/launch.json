@@ -21,15 +21,31 @@
       "cwd": "${workspaceFolder}"
     },
     {
-      "name": "swarthmore-opinions",
+      "name": "ucdavis-opinions",
       "type": "debugpy",
       "request": "launch",
       "program": "${workspaceFolder}/src/crawl2parquet.py",
       "console": "integratedTerminal",
       "args": [
-        "config/swarthmore-opinions.yaml",
+        "config/ucdavis-opinions.yaml",
+        "247",
+        "355",
+      ],
+      "purpose": [
+        "debug-in-terminal"
+      ],
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "ucsantacruz-opinions",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/src/crawl2parquet.py",
+      "console": "integratedTerminal",
+      "args": [
+        "config/ucsantacruz-opinions.yaml",
         "1",
-        "6",
+        "2",
       ],
       "purpose": [
         "debug-in-terminal"
