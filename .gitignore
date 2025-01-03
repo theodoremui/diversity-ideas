@@ -134,4 +134,6 @@ models/
 .DS_Store/
 
 data/archive/
+data/archive/*
 data/data/
+data/data/*
