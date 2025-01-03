@@ -39,9 +39,9 @@ SUBJECT="opinions"
 
 BASE_URL: str = "<base>"
 LISTING_BASE_URL: str = f"<url>"
-ARTICLE_SELECTOR: str = f"<selector>"
-TITLE_SELECTOR = f"<title_selector>"
-CONTENT_SELECTOR = f"<content_selector>"
+ARTICLE_SELECTORS = [f"<selector>"]
+TITLE_SELECTORS = [f"<title_selector>"]
+CONTENT_SELECTORS = [f"<content_selector>"]
 DATE_SELECTOR = f"<date_selector>"
 URL_DATE_PATTERN = "https://college/article/(\d+)/(\d+)"
 DATE_FORMATS = ["%b. %d, %Y", "%b %d, %Y", "%B %d, %Y"]
@@ -111,10 +111,19 @@ def getArticleText(url: str, numRetries: int, useProxy: bool = True) -> Tuple[st
             html = ourrequests.requestHtml(url, attempts, useProxy)
             if html is not None and len(html) > 10:
                 soup = BeautifulSoup(html, 'html.parser')
-                titleObj = soup.select_one(TITLE_SELECTOR)
-                contentObj  = soup.select_one(CONTENT_SELECTOR)
-                if titleObj is not None: content = titleObj.text.strip() + "\n"
-                if contentObj is not None:  content += contentObj.text.strip()
+                titleObj = None
+                for titleSelector in TITLE_SELECTORS:
+                    titleObj = soup.select_one(titleSelector)
+                    if titleObj is not None:
+                        content = titleObj.text.strip() + "\n"
+                        break
+
+                contentObj = None
+                for contentSelector in CONTENT_SELECTORS:
+                    contentObj = soup.select_one(contentSelector)
+                    if contentObj is not None:
+                        content += contentObj.text.strip() + "\n"
+                        break
 
                 if DATE_SELECTOR is not None and len(DATE_SELECTOR.strip()) > 0:
                     dateObj = soup.select_one(DATE_SELECTOR)
@@ -130,7 +139,8 @@ def getArticleText(url: str, numRetries: int, useProxy: bool = True) -> Tuple[st
                                     pass
                                                         
                 # for date, try to the URL first
-                if dateObj is None or len(DATE_SELECTOR.strip()) ==0:
+                if (dateObj is None or len(DATE_SELECTOR.strip()) ==0) and \
+                    URL_DATE_PATTERN is not None and len(URL_DATE_PATTERN.strip()) > 0:
                     try:
                         date_groups = re.search(URL_DATE_PATTERN, url)
                         if date_groups and len(date_groups.groups()) >= 2:
@@ -167,8 +177,11 @@ def getArticleList(listUrl: str, numRetries: int, showProgress: bool = False, us
         html = ourrequests.requestHtml(listUrl, attempts, useProxy)
         if html is not None and len(html) > 0:
             soup = BeautifulSoup(html, "html.parser")
-            articles = soup.select(ARTICLE_SELECTOR)
-            if articles is not None and len(articles) > 0: articleList += articles
+            for articleSelector in ARTICLE_SELECTORS: 
+                articles = soup.select(articleSelector)
+                if articles is not None and len(articles) > 0: 
+                    articleList += articles
+                    # we want to get all articles that match the selectors
         if showProgress: print(f"\tretrieved: {len(articleList)}")
         attempts += 1
 

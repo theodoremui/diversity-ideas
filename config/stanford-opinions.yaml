@@ -9,8 +9,8 @@ BASE_URL: "https://stanforddaily.com"
 LISTING_BASE_URL: "https://stanforddaily.com/category/opinions/page/"
 ARTICLE_SELECTOR: "div > h3 > a[href^='https://stanforddaily.com/']"
 
-TITLE_SELECTOR: "article div > h1.elementor-heading-title"
-CONTENT_SELECTOR: "article div > div.e-con-inner"
+TITLE_SELECTORS: ["article div > h1.elementor-heading-title"]
+CONTENT_SELECTORS: ["article div > div.e-con-inner"]
 DATE_SELECTOR: "#date > div > span"
 DATE_FORMATS: ["%b. %d, %Y", "%b %d, %Y", "%B %d, %Y"]
 

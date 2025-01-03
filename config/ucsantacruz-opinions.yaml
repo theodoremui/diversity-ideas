@@ -9,8 +9,8 @@ BASE_URL: "https://cityonahillpress.com"
 LISTING_BASE_URL: "https://cityonahillpress.com/category/op-ed/page/"
 ARTICLE_SELECTOR: "article div > div.post-content-container > a[href^='https://cityonahillpress.com/']"
 
-TITLE_SELECTOR: "div.post-single-meta > a.post-title > h1"
-CONTENT_SELECTOR: "div.post-item-single-container > div.post-content.post-single-content"
+TITLE_SELECTORS: ["div.post-single-meta > a.post-title > h1"]
+CONTENT_SELECTORS: ["div.post-item-single-container > div.post-content.post-single-content"]
 DATE_SELECTOR: ""
 DATE_FORMATS: ["%B %d, %Y", "%b. %d, %Y", "%b %d, %Y"]
 

@@ -1,0 +1,25 @@
+RETRIES: 6
+CHECKPOINT_FREQUENCY: 1
+
+OUTPUT_DIR: "data"
+SCHOOL: "ucr"
+SUBJECT: "opinions"
+
+BASE_URL: "https://www.highlandernews.org"
+LISTING_BASE_URL: "https://www.highlandernews.org/category/opinions/page/"
+ARTICLE_SELECTORS: [
+  "#td-outer-wrap h3.entry-title > a[href^='https://www.highlandernews.org/']",
+  "div.td-big-grid-wrapper div.td-module-thumb > a[href^='https://www.highlandernews.org/']"
+  ]
+
+
+TITLE_SELECTORS: [
+  "header.td-post-title > h1.entry-title"
+  ]
+CONTENT_SELECTORS: [
+  "article div > div.td-post-content"
+  ]
+DATE_SELECTOR: "article span.td-post-date > time"
+DATE_FORMATS: ["%B %d, %Y", "%b %d, %Y", "%b. %d, %Y"]
+
+URL_DATE_PATTERN: ""

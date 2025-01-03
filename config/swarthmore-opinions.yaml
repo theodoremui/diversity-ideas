@@ -8,8 +8,9 @@ SUBJECT: "opinions"
 BASE_URL: "https://swarthmorephoenix.com"
 LISTING_BASE_URL: "https://swarthmorephoenix.com/category/opinions/page/"
 ARTICLE_SELECTOR: "h2.title56 > a[href^='https://swarthmorephoenix.com/']"
-TITLE_SELECTOR: "article div h1[class^='post-title']"
-CONTENT_SELECTOR: "div.primary56 div[class^='entry-content']"
+
+TITLE_SELECTORS: ["article div h1[class^='post-title']"]
+CONTENT_SELECTORS: ["div.primary56 div[class^='entry-content']"]
 DATE_SELECTOR: "div.meta56__date"
 DATE_FORMATS: ["%B %d, %Y", "%b. %d, %Y", "%b %d, %Y"]
 

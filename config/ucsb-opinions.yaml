@@ -1,0 +1,17 @@
+RETRIES: 6
+CHECKPOINT_FREQUENCY: 1
+
+OUTPUT_DIR: "data"
+SCHOOL: "ucsb"
+SUBJECT: "opinion"
+
+BASE_URL: "https://dailynexus.com/"
+LISTING_BASE_URL: "https://dailynexus.com/category/opinion/page/"
+ARTICLE_SELECTOR: "#category-page-posts-box h1 > a[href^='https://dailynexus.com/']"
+
+TITLE_SELECTORS: ["#single-post-header > div.single-post-headline"]
+CONTENT_SELECTORS: ["#single-post-box > div.single-post > div.single-post-content"]
+DATE_SELECTOR: ""
+DATE_FORMATS: ["%B %d, %Y", "%b. %d, %Y", "%b %d, %Y"]
+
+URL_DATE_PATTERN: "https://dailynexus.com//(\\d+)-(\\d+)-"

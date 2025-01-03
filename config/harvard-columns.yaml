@@ -9,9 +9,8 @@ BASE_URL: "https://www.thecrimson.com"
 LISTING_BASE_URL: "https://www.thecrimson.com/tag/columns/page/"
 ARTICLE_SELECTOR: "div.standard-base-main-content div.preview-content > h1 > a"
 
-TITLE_SELECTOR: "#root > div.css-nmmrhs > div.css-bgn7sn > h1"
-
-CONTENT_SELECTOR: "#root > div > div.css-85imjw"
+TITLE_SELECTORS: ["#root > div.css-nmmrhs > div.css-bgn7sn > h1"]
+CONTENT_SELECTORS: ["#root > div > div.css-85imjw"]
 DATE_SELECTOR: "#root div > span > time"
 DATE_FORMATS: ["%B %d, %Y", "%b. %d, %Y", "%b %d, %Y"]
 

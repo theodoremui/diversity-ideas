@@ -21,15 +21,31 @@
       "cwd": "${workspaceFolder}"
     },
     {
-      "name": "ucdavis-opinions",
+      "name": "ucsb-opinion",
       "type": "debugpy",
       "request": "launch",
       "program": "${workspaceFolder}/src/crawl2parquet.py",
       "console": "integratedTerminal",
       "args": [
-        "config/ucdavis-opinions.yaml",
-        "247",
-        "355",
+        "config/ucsb-opinions.yaml",
+        "1",
+        "1",
+      ],
+      "purpose": [
+        "debug-in-terminal"
+      ],
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "ucr-opinion",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/src/crawl2parquet.py",
+      "console": "integratedTerminal",
+      "args": [
+        "config/ucr-opinions.yaml",
+        "1",
+        "1",
       ],
       "purpose": [
         "debug-in-terminal"
