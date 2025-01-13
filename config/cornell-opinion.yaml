@@ -1,0 +1,19 @@
+RETRIES: 6
+CHECKPOINT_FREQUENCY: 1
+
+OUTPUT_DIR: "data"
+SCHOOL: "cornell"
+SUBJECT: "opinion"
+
+BASE_URL: "https://www.cornellsun.com"
+LISTING_BASE_URL: "https://cornellsun.com/category/opinion/page/"
+ARTICLE_SELECTORS:
+  ["#main article h2.entry-title > a[href^='https://cornellsun.com/']"]
+
+TITLE_SELECTORS: ["#main article header h1.entry-title"]
+CONTENT_SELECTORS: ["#main div article"]
+
+DATE_SELECTOR: ""
+DATE_FORMATS: ["%b %d, %Y", "%B %d, %Y", "%b. %d, %Y"]
+
+URL_DATE_PATTERN: "https://cornellsun.com/(\\d+)/(\\d+)"

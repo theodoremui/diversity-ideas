@@ -7,7 +7,11 @@ SUBJECT: "opinions"
 
 BASE_URL: "https://www.browndailyherald.com"
 LISTING_BASE_URL: "https://www.browndailyherald.com/section/opinions?per_page=20&page="
-ARTICLE_SELECTOR: "div > h2.headline > a[href^='https://www.browndailyherald.com/article']"
+ARTICLE_SELECTORS:
+  [
+    "div > h2.headline > a[href^='https://www.browndailyherald.com/article']",
+    "div > h2.headline > a[href^='https://www.browndailyherald.com/article']",
+  ]
 
 TITLE_SELECTORS: ["article.full-article > h1"]
 CONTENT_SELECTORS: ["article.full-article > div.article-content"]

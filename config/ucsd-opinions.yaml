@@ -7,17 +7,23 @@ SUBJECT: "opinion"
 
 BASE_URL: "https://ucsdguardian.org"
 LISTING_BASE_URL: "https://ucsdguardian.org/category/opinion/page/"
-ARTICLE_SELECTOR: "#content h2 > a[href^='https://ucsdguardian.org/']"
-
-TITLE_SELECTORS: [
-  "#sno-sites-main-content div > h1.sno-story-headline",
-  "#sno-sites-main-content div > h1.storyheadline",
+ARTICLE_SELECTORS:
+  [
+    "#content h2 > a[href^='https://ucsdguardian.org/']",
+    "#content h2 > a[href^='https://ucsdguardian.org/']",
   ]
-CONTENT_SELECTORS: [
-  "#sno-sites-main-content div > div.sno-story-body",
-  "#sno-sites-main-content div > span.storycontent",
-  "#sno-sites-main-content div > div.storycontent",
-]
+
+TITLE_SELECTORS:
+  [
+    "#sno-sites-main-content div > h1.sno-story-headline",
+    "#sno-sites-main-content div > h1.storyheadline",
+  ]
+CONTENT_SELECTORS:
+  [
+    "#sno-sites-main-content div > div.sno-story-body",
+    "#sno-sites-main-content div > span.storycontent",
+    "#sno-sites-main-content div > div.storycontent",
+  ]
 
 DATE_SELECTOR: "#sno-sites-main-content div > div.sno-story-date > span.time-wrapper"
 DATE_FORMATS: ["%b %d, %Y", "%B %d, %Y", "%b. %d, %Y"]

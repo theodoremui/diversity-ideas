@@ -1,0 +1,22 @@
+RETRIES: 6
+CHECKPOINT_FREQUENCY: 10
+
+OUTPUT_DIR: "data"
+SCHOOL: "dartmouth"
+SUBJECT: "opinion"
+
+BASE_URL: "https://www.thedartmouth.com/section/opinion"
+LISTING_BASE_URL: "https://www.thedartmouth.com/section/opinion?per_page=20&page="
+ARTICLE_SELECTORS:
+  [
+    "#main-content h3.headline > a[href^='https://www.thedartmouth.com/']",
+    "#main-content h3.headline > a[href^='https://www.thedartmouth.com/']",
+  ]
+
+TITLE_SELECTORS: ["#main-content article h1"]
+CONTENT_SELECTORS: ["#main-content article.full-article"]
+
+DATE_SELECTOR: ""
+DATE_FORMATS: ["%b %d, %Y", "%B %d, %Y", "%b. %d, %Y"]
+
+URL_DATE_PATTERN: "https://www.thedartmouth.com/article/(\\d+)/(\\d+)"

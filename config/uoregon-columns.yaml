@@ -7,7 +7,11 @@ SUBJECT: "opinion"
 
 BASE_URL: "https://dailyemerald.com"
 LISTING_BASE_URL: "https://dailyemerald.com/category/columns/page/"
-ARTICLE_SELECTOR: "#content div > div > h2> a[href^='https://dailyemerald.com/']"
+ARTICLE_SELECTORS:
+  [
+    "#content div > div > h2> a[href^='https://dailyemerald.com/']",
+    "#content div > div > h2> a[href^='https://dailyemerald.com/']",
+  ]
 
 TITLE_SELECTORS: ["div > div > h1.sno-story-headline"]
 CONTENT_SELECTORS: ["#sno-story-body-content"]

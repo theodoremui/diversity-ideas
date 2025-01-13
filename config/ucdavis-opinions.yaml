@@ -7,7 +7,11 @@ SUBJECT: "opinions"
 
 BASE_URL: "https://theaggie.org"
 LISTING_BASE_URL: "https://theaggie.org/category/opinion/page/"
-ARTICLE_SELECTOR: "div > h3.entry-title > a[href^='https://theaggie.org/']"
+ARTICLE_SELECTORS:
+  [
+    "div > h3.entry-title > a[href^='https://theaggie.org/']",
+    "div > h3.entry-title > a[href^='https://theaggie.org/']",
+  ]
 
 TITLE_SELECTORS: ["article div > h1.tdb-title-text"]
 CONTENT_SELECTORS: ["article div > div.td_block_wrap.tdb_single_content"]

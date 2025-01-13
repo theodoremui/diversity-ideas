@@ -5,6 +5,77 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Python Debugger: Current File",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${file}",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "columbia-op-eds",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/src/crawl2parquet.py",
+      "console": "integratedTerminal",
+      "args": [
+        "config/colombia-op-eds.yaml",
+        "1",
+        "1",
+      ],
+      "purpose": [
+        "debug-in-terminal"
+      ],
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "dartmouth-opinion",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/src/crawl2parquet.py",
+      "console": "integratedTerminal",
+      "args": [
+        "config/dartmouth-opinion.yaml",
+        "1",
+        "1",
+      ],
+      "purpose": [
+        "debug-in-terminal"
+      ],
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "cornell-opinion",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/src/crawl2parquet.py",
+      "console": "integratedTerminal",
+      "args": [
+        "config/cornell-opinion.yaml",
+        "1",
+        "1",
+      ],
+      "purpose": [
+        "debug-in-terminal"
+      ],
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "yale-opinion",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/src/crawl2parquet.py",
+      "console": "integratedTerminal",
+      "args": [
+        "config/yale-opinion.yaml",
+        "1",
+        "1",
+      ],
+      "purpose": [
+        "debug-in-terminal"
+      ],
+      "cwd": "${workspaceFolder}"
+    },
+    {
       "name": "stanford-opinions",
       "type": "debugpy",
       "request": "launch",

@@ -1,0 +1,22 @@
+RETRIES: 2
+CHECKPOINT_FREQUENCY: 10
+
+OUTPUT_DIR: "data"
+SCHOOL: "colombia"
+SUBJECT: "op-eds"
+
+BASE_URL: "https://www.columbiaspectator.com"
+LISTING_BASE_URL: "https://www.columbiaspectator.com/opinion/op-eds/"
+LISTING_INCREMENT: 10
+ARTICLE_SELECTORS:
+  [
+    "#fusion-app div[class*='ArticleBrief'] div[class*='HeadlineContainer'] > a[href^='/opinion/']",
+  ]
+
+TITLE_SELECTORS: ["#main div h1[class*='Headlines']"]
+CONTENT_SELECTORS: ["#main > div > div[class*='BodyContainer']"]
+
+DATE_SELECTOR: ""
+DATE_FORMATS: ["%b %d, %Y", "%B %d, %Y", "%b. %d, %Y"]
+
+URL_DATE_PATTERN: "https://www.columbiaspectator.com/opinion/(\\d+)/(\\d+)"

@@ -7,7 +7,11 @@ SUBJECT: "op-eds"
 
 BASE_URL: "https://www.thecrimson.com"
 LISTING_BASE_URL: "https://www.thecrimson.com/tag/op-eds/page/"
-ARTICLE_SELECTOR: " div > div > div.preview-content > h1 > a[href^='/article']"
+ARTICLE_SELECTORS:
+  [
+    " div > div > div.preview-content > h1 > a[href^='/article']",
+    " div > div > div.preview-content > h1 > a[href^='/article']",
+  ]
 
 TITLE_SELECTORS: ["#root > div.css-nmmrhs > div.css-bgn7sn > h1"]
 CONTENT_SELECTORS: ["#root > div > div.css-85imjw"]

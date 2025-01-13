@@ -7,7 +7,11 @@ SUBJECT: "columns"
 
 BASE_URL: "https://www.thecrimson.com"
 LISTING_BASE_URL: "https://www.thecrimson.com/tag/columns/page/"
-ARTICLE_SELECTOR: "div.standard-base-main-content div.preview-content > h1 > a"
+ARTICLE_SELECTORS:
+  [
+    "div.standard-base-main-content div.preview-content > h1 > a",
+    "div.standard-base-main-content div.preview-content > h1 > a",
+  ]
 
 TITLE_SELECTORS: ["#root > div.css-nmmrhs > div.css-bgn7sn > h1"]
 CONTENT_SELECTORS: ["#root > div > div.css-85imjw"]

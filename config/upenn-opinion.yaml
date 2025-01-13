@@ -1,0 +1,22 @@
+RETRIES: 2
+CHECKPOINT_FREQUENCY: 10
+
+OUTPUT_DIR: "data"
+SCHOOL: "upenn"
+SUBJECT: "opinion"
+
+BASE_URL: "https://www.thedp.com/section/opinion"
+LISTING_BASE_URL: "https://www.thedp.com/section/opinion?per_page=20&page="
+ARTICLE_SELECTORS:
+  [
+    "#content div h3.standard-link a[href^='https://www.thedp.com/article/']",
+    "#content div h2 > a[href^='https://www.thedp.com/article/']",
+  ]
+
+TITLE_SELECTORS: ["#content article h1.article-title"]
+CONTENT_SELECTORS: ["#content article"]
+
+DATE_SELECTOR: ""
+DATE_FORMATS: ["%b %d, %Y", "%B %d, %Y", "%b. %d, %Y"]
+
+URL_DATE_PATTERN: "https://www.thedp.com/article/(\\d+)/(\\d+)"
