@@ -12,7 +12,7 @@ app = Spider()
 
 urls = [
     "https://www.columbiaspectator.com/opinion/op-eds/1/",
-    "https://www.columbiaspectator.com/opinion/2024/12/11/at-columbia-we-dont-strike-our-ideological-opponents/",
+    # "https://www.columbiaspectator.com/opinion/2024/12/11/at-columbia-we-dont-strike-our-ideological-opponents/",
     # "https://www.columbiaspectator.com/opinion/2024/12/08/columbias-complicity-in-cop29-the-greenwashing-of-human-rights-abuses/",
 ]
 
