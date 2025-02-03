@@ -25,6 +25,8 @@ dependencies = [
     "llama-index-readers-web>=0.1.12",
     "scrapy>=2.12.0",
     "aiofiles>=24.1.0",
+    "ace-tools>=0.0",
+    "scikit-learn>=1.6.1",
 ]
 
 [dependency-groups]
