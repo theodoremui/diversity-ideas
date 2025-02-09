@@ -27,6 +27,8 @@ dependencies = [
     "aiofiles>=24.1.0",
     "ace-tools>=0.0",
     "scikit-learn>=1.6.1",
+    "llama-index-embeddings-ollama>=0.2.0",
+    "llama-index-llms-ollama>=0.2.2",
 ]
 
 [dependency-groups]
