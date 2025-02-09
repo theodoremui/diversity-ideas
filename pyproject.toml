@@ -29,6 +29,9 @@ dependencies = [
     "scikit-learn>=1.6.1",
     "llama-index-embeddings-ollama>=0.2.0",
     "llama-index-llms-ollama>=0.2.2",
+    "llama-index-llms-openai>=0.1.31",
+    "llama-index-agent-openai>=0.2.9",
+    "tiktoken>=0.8.0",
 ]
 
 [dependency-groups]

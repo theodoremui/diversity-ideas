@@ -566,8 +566,10 @@ dependencies = [
     { name = "bs4" },
     { name = "fake-useragent" },
     { name = "ipykernel" },
+    { name = "llama-index-agent-openai" },
     { name = "llama-index-embeddings-ollama" },
     { name = "llama-index-llms-ollama" },
+    { name = "llama-index-llms-openai" },
     { name = "llama-index-readers-web" },
     { name = "matplotlib" },
     { name = "nltk" },
@@ -583,6 +585,7 @@ dependencies = [
     { name = "scrapy" },
     { name = "selenium" },
     { name = "spider-client" },
+    { name = "tiktoken" },
     { name = "webdriver-manager" },
 ]
 
@@ -599,8 +602,10 @@ requires-dist = [
     { name = "bs4", specifier = ">=0.0.2" },
     { name = "fake-useragent", specifier = ">=2.0.3" },
     { name = "ipykernel", specifier = ">=6.29.5" },
+    { name = "llama-index-agent-openai", specifier = ">=0.2.9" },
     { name = "llama-index-embeddings-ollama", specifier = ">=0.2.0" },
     { name = "llama-index-llms-ollama", specifier = ">=0.2.2" },
+    { name = "llama-index-llms-openai", specifier = ">=0.1.31" },
     { name = "llama-index-readers-web", specifier = ">=0.1.12" },
     { name = "matplotlib", specifier = ">=3.10.0" },
     { name = "nltk", specifier = ">=3.9.1" },
@@ -616,6 +621,7 @@ requires-dist = [
     { name = "scrapy", specifier = ">=2.12.0" },
     { name = "selenium", specifier = ">=4.27.1" },
     { name = "spider-client", specifier = ">=0.1.25" },
+    { name = "tiktoken", specifier = ">=0.8.0" },
     { name = "webdriver-manager", specifier = ">=4.0.2" },
 ]
 
@@ -1288,6 +1294,20 @@ wheels = [
 ]
 
 [[package]]
+name = "llama-index-agent-openai"
+version = "0.2.9"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "llama-index-core" },
+    { name = "llama-index-llms-openai" },
+    { name = "openai" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/33/eb/9609f591a91e2df9ad77dbc2d2902fbe95b1a6daca73b5868ef8dbd6c359/llama_index_agent_openai-0.2.9.tar.gz", hash = "sha256:debe86da6d9d983db32b445ddca7c798ac140fe59573bafded73595b3995f3d5", size = 10464 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/c2/9a/9a327ff664e4904b6806f716bf705041d3015b99b12568872833df10b18f/llama_index_agent_openai-0.2.9-py3-none-any.whl", hash = "sha256:d7f0fd4c87124781acd783be603871f8808b1a3969e876a9c96e2ed0844d46ac", size = 13138 },
+]
+
+[[package]]
 name = "llama-index-core"
 version = "0.10.68.post1"
 source = { registry = "https://pypi.org/simple" }
@@ -1344,6 +1364,19 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/e6/e7/72f4c20089fd6dcbdc690f4392346dc8e1b9599e6b4a1dc984263c94cf6a/llama_index_llms_ollama-0.2.2.tar.gz", hash = "sha256:0c7f192cb8b768707bd5154b97e2a41284732d62070eb76190dee125e95245ea", size = 4115 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/7e/26/3f368f2155619dbded99c69b4b6e23fa5e7179e9e4b87eff338c7cdbdda8/llama_index_llms_ollama-0.2.2-py3-none-any.whl", hash = "sha256:c224d7c17d641045bc9b6a6681dab434c1c421af0bacb5825eea444fefd8ed78", size = 4364 },
+]
+
+[[package]]
+name = "llama-index-llms-openai"
+version = "0.1.31"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "llama-index-core" },
+    { name = "openai" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/0b/c6/a570a1a9eefa100b4eea077ebeb1e17cf0a5e39b495431419e891addad7a/llama_index_llms_openai-0.1.31.tar.gz", hash = "sha256:c235493f453b92903722054a8dfb1452ea850eac47a68a38bab3b823988d56fe", size = 11312 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/dd/60/54155af74479199bdbd34394af6d907be7103b8bb7990ec6ef6e54b7dd17/llama_index_llms_openai-0.1.31-py3-none-any.whl", hash = "sha256:800815b1b964b7d8dddd0e02a09fb57ac5f2ec6f80db92cd704dae718846023f", size = 12040 },
 ]
 
 [[package]]
