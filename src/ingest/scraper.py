@@ -180,7 +180,7 @@ class Scraper:
 
         return result
 
-    async def fetch_markdown(self, session, url, semaphore, progress, total):
+    async def fetch_markdown(self, session, url, semaphore, progress, total, remove_links=False):
         headers_markdown = {
             "Accept": "application/json",
             "X-Retain-Images": "none",
@@ -194,9 +194,9 @@ class Scraper:
             response = await self.fetch(
                 session, self.JINA_READER + url, headers_markdown, semaphore
             )
-            markdown = await self.remove_links_from_markdown(
-                response.get("data").get("content")
-            )
+            markdown = response.get("data").get("content")
+            if remove_links:
+                markdown = await self.remove_links_from_markdown(markdown)
 
             result = {"source": url, "content": markdown}
         except aiohttp.ContentTypeError as e:

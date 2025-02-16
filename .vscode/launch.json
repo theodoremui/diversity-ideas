@@ -15,7 +15,7 @@
       "name": "columbia-op-eds",
       "type": "debugpy",
       "request": "launch",
-      "program": "${workspaceFolder}/src/crawl2parquet.py",
+      "program": "${workspaceFolder}/src/crawlcolumbia2parquet.py",
       "console": "integratedTerminal",
       "args": [
         "config/colombia-op-eds.yaml",

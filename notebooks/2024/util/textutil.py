@@ -107,6 +107,27 @@ def getNormalizedPairwiseDispersion(wv):
     N = len(wv)
     return getPairwiseCosineDistances(wv) / (N * (N-1)/2.)
 
+def clean_markdown(text) -> str:
+    # Remove markdown images ![alt text](url)
+    text = re.sub(r'!\[.*?\]\(.*?\)', '', text)
+    
+    # Remove markdown links [text](url)
+    text = re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', text)
+    
+    # Remove bare URLs
+    text = re.sub(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', '', text)
+    
+    # Remove "[]( ### Opinion | Op-eds # " patterns
+    text = re.sub(r'\[\]\(', '', text)
+    text = re.sub(r'###\s*Opinion\s*\|?\s*Op-eds\s*#?', '', text)
+    
+    # Remove iframe patterns with Opinion/Op-eds
+    text = re.sub(r'iframe\s*###\s*Opinion\s*\|?\s*Op-eds\s*', '', text)
+        
+    # Clean up extra whitespace
+    text = re.sub(r'\s+', ' ', text)
+    
+    return text.strip()
 
 if __name__ == "__main__":
     a1 = [1, 0]
